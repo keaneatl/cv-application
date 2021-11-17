@@ -1,9 +1,12 @@
 function App() {
   return (
     <div className="App">
+      <div className="Header">
+        <h1>CV Application</h1>
+      </div>
       <div className="GenInfo">
         <form>
-          <h1>General Information</h1>
+          <h2>General Information</h2>
 
           <input
             type="text"
@@ -29,7 +32,7 @@ function App() {
       </div>
       <div className="Education">
         <form>
-          <h1>Education</h1>
+          <h2>Education</h2>
           <input
             type="text"
             className="SchoolName"
@@ -45,13 +48,13 @@ function App() {
             className="SchoolDur"
             placeholder="Inclusive Years"
           ></input>
+          <button type="submit">Submit</button>
+          <button type="button">Add</button>
         </form>
-        <button type="submit">Submit</button>
-        <button type="button">Add</button>
       </div>
       <div className="WorkExp">
         <form>
-          <h1>Work & Leadership Experience</h1>
+          <h2>Work & Leadership Experience</h2>
           <input
             type="text"
             className="CompanyName"
@@ -74,9 +77,9 @@ function App() {
             cols="50"
             rows="3"
           ></textarea>
+          <button type="submit">Submit</button>
+          <button type="button">Add</button>
         </form>
-        <button type="submit">Submit</button>
-        <button type="button">Add</button>
       </div>
 
       <div className="cv-container"></div>
