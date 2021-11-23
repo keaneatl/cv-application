@@ -1,22 +1,25 @@
-import React from "react";
+import React, { Component } from "react";
 import "../styles/EducationStyles.css";
-const Education = (props) => {
-  const { School, Level, Years, SchoolDesc } = props;
 
-  return (
-    <div className="cv-education">
+class Education extends Component {
+  constructor() {
+    super();
+  }
+  render() {
+    const { School, Level, Years, SchoolDesc } = this.props;
+    return (
+      <div className="cv-education">
         <div className="edu-lcol">
-            <strong>{Years}</strong>
-            <p>{Level}</p>
+          <strong>{Years}</strong>
+          <p>{Level}</p>
         </div>
-        <div className="edu-rcol"> 
-            <h2 className="edu-name">{School}</h2>
-            <p className="edu-details">
-                {SchoolDesc}
-            </p>
+        <div className="edu-rcol">
+          <h2 className="edu-name">{School}</h2>
+          <p className="edu-details">{SchoolDesc}</p>
         </div>
-    </div>
-  );
-};
+      </div>
+    );
+  }
+}
 
 export default Education;
