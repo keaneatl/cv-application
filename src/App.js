@@ -50,9 +50,10 @@ class App extends Component {
   };
 
   handleGIChange = (e) => {
-    const { target: name, value } = e;
+    const { name, value } = e.target;
     this.setState({
       GeneralInfo: {
+        ...this.state.GeneralInfo,
         [name]: value,
       },
     });
@@ -61,9 +62,12 @@ class App extends Component {
   handleEduChange = (e) => {
     const { name, value } = e.target;
     this.setState({
-      Edu: {
-        [name]: value,
-      },
+      Edu: [
+        {
+          ...this.state.Edu[0],
+          [name]: value,
+        },
+      ],
     });
   };
 
@@ -71,6 +75,7 @@ class App extends Component {
     const { name, value } = e.target;
     this.setState({
       Work: {
+        ...this.state.Work,
         [name]: value,
       },
     });
@@ -95,22 +100,25 @@ class App extends Component {
                 type="text"
                 className="FullName"
                 placeholder="Full Name"
+                name="Name"
                 onChange={this.handleGIChange}
               ></input>
 
-              <input type="email" className="Email" placeholder="Email"></input>
+              <input
+                type="email"
+                name="Email"
+                className="Email"
+                placeholder="Email"
+                onChange={this.handleGIChange}
+              ></input>
 
               <input
                 type="tel"
                 className="CellNum"
                 placeholder="Phone Number"
+                name="Number"
+                onChange={this.handleGIChange}
               ></input>
-              <textarea
-                name="Description"
-                cols="50"
-                rows="5"
-                placeholder="Profile Description"
-              />
             </div>
             <div className="Education">
               <h2>Education</h2>
@@ -119,17 +127,32 @@ class App extends Component {
                 type="text"
                 className="SchoolName"
                 placeholder="School Name"
+                name="School"
+                onChange={this.handleEduChange}
               ></input>
               <input
                 type="text"
                 className="SchoolLevel"
+                name="Level"
                 placeholder="Level (e.g. High Degree)"
+                onChange={this.handleEduChange}
               ></input>
               <input
                 type="text"
                 className="SchoolDur"
+                name="Years"
                 placeholder="Inclusive Years"
+                onChange={this.handleEduChange}
               ></input>
+              <textarea
+                type="text"
+                name="Description"
+                className="EduDesc"
+                placeholder="Job Description"
+                cols="50"
+                rows="3"
+                onChange={this.handleEduChange}
+              ></textarea>
               <button className="FormBtn">Add New</button>
             </div>
             <div className="WorkExp">
@@ -138,24 +161,32 @@ class App extends Component {
               <input
                 type="text"
                 className="CompanyName"
+                name="Company"
                 placeholder="Company Name"
+                onChange={this.handleWorkChange}
               ></input>
               <input
                 type="text"
                 className="PositionTitle"
+                name="Position"
                 placeholder="Position/Title"
+                onChange={this.handleWorkChange}
               ></input>
               <input
                 type="text"
                 className="WorkDur"
+                name="WorkYears"
                 placeholder="Inclusive Years"
+                onChange={this.handleWorkChange}
               ></input>
               <textarea
                 type="text"
                 className="JobDesc"
+                name="WorkDesc"
                 placeholder="Job Description"
                 cols="50"
                 rows="3"
+                onChange={this.handleWorkChange}
               ></textarea>
               <button className="FormBtn">Add New</button>
             </div>
