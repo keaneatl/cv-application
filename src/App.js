@@ -38,16 +38,7 @@ class App extends Component {
           "Lorem ipsumLorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum",
         id: uniqid(),
       },
-      Work: [
-        {
-          Company: "Delta",
-          Position: "Software Engineer",
-          WorkYears: "2020 - 2021",
-          WorkDesc:
-            "Lorem ipsumLorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum",
-          id: uniqid(),
-        },
-      ],
+      Work: [],
     };
   }
 
@@ -76,13 +67,21 @@ class App extends Component {
     });
   };
 
+  handleGIEdit = (e) => {
+    const inputFields = Array.from(e.target.parentNode.childNodes);
+    console.log(inputFields);
+    inputFields.forEach((field) => field.removeAttribute("disabled"));
+  };
+
   handleGISubmit = (e) => {
     e.preventDefault();
+    const inputFields = Array.from(e.target.childNodes);
+    inputFields.forEach((field) => {
+      if (field.tagName === "INPUT") field.setAttribute("disabled", true);
+    });
     this.setState({
       GeneralInfo: {
-        Name: this.state.TempGenInfo.Name,
-        Email: this.state.TempGenInfo.Email,
-        Number: this.state.TempGenInfo.Number,
+        ...this.state.TempGenInfo,
       },
     });
   };
@@ -141,7 +140,6 @@ class App extends Component {
       formElems.forEach((element) => {
         element.removeAttribute("disabled");
       });
-      return { editBtn };
     };
 
     const handleSubmit = (e) => {
@@ -240,8 +238,128 @@ class App extends Component {
     });
   };
 
+  handleNewWorkForm = (e) => {
+    const handleEdit = (e) => {
+      const editBtn = e.target;
+      const formElems = Array.from(editBtn.parentNode.parentNode.childNodes);
+      const allEduElements = Array.from(
+        editBtn.parentNode.parentNode.parentNode.childNodes
+      );
+      allEduElements.forEach((element) => {
+        if (
+          element !== editBtn.parentNode.parentNode.parentNode &&
+          element.tagName === "FORM"
+        ) {
+          const formEls = element.childNodes;
+          formEls.forEach((element) => {
+            element.setAttribute("disabled", true);
+          });
+        }
+      });
+      formElems.forEach((element) => {
+        element.removeAttribute("disabled");
+      });
+    };
+
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      const formElems = Array.from(e.target.childNodes);
+      formElems.forEach((e) => {
+        e.setAttribute("disabled", true);
+      });
+      const formKeyVals = Object.values(e.target);
+      console.log(formKeyVals);
+      if (this.state.Work.some((item) => item.id === formKeyVals[7].key)) {
+        this.setState({
+          Work: this.state.Work.map((item) => {
+            if (item.id === formKeyVals[7].key) {
+              item.Company = this.state.TempWork.Company;
+              item.Position = this.state.TempWork.Position;
+              item.WorkYears = this.state.TempWork.WorkYears;
+              item.WorkDesc = this.state.TempWork.WorkDesc;
+            }
+            return item;
+          }),
+        });
+      } else {
+        this.setState({
+          TempWork: {
+            ...this.state.TempWork,
+            id: uniqid(),
+          },
+          Work: this.state.Work.concat({
+            ...this.state.TempWork,
+          }),
+        });
+      }
+    };
+
+    const handleDelete = (e) => {
+      const formKeyVals = Object.values(e.target.parentNode.parentNode);
+      console.log(formKeyVals);
+      this.setState({
+        Work: this.state.Work.filter((item) => item.id !== formKeyVals[7].key),
+        WorkForms: this.state.WorkForms.filter(
+          (form) => form.key !== formKeyVals[7].key
+        ),
+      });
+    };
+    this.setState({
+      WorkForms: this.state.WorkForms.concat(
+        <form onSubmit={handleSubmit} key={this.state.TempWork.id}>
+          <strong>#{this.state.WorkForms.length + 1}</strong>
+          <input
+            type="text"
+            className="CompanyName"
+            name="Company"
+            placeholder="Company Name"
+            onChange={this.handleWorkChange}
+            required
+          ></input>
+          <input
+            type="text"
+            className="PositionTitle"
+            name="Position"
+            placeholder="Position/Title"
+            onChange={this.handleWorkChange}
+            required
+          ></input>
+          <input
+            type="text"
+            className="WorkDur"
+            name="WorkYears"
+            placeholder="Inclusive Years"
+            onChange={this.handleWorkChange}
+            required
+          ></input>
+          <textarea
+            type="text"
+            className="JobDesc"
+            name="WorkDesc"
+            placeholder="Job Description"
+            cols="50"
+            rows="3"
+            onChange={this.handleWorkChange}
+            required
+          ></textarea>
+          <span>
+            <button type="button" className="FormBtn" onClick={handleEdit}>
+              Edit
+            </button>
+            <button type="button" className="FormBtn" onClick={handleDelete}>
+              Delete
+            </button>
+          </span>
+          <button type="submit" className="FormBtn SaveEdu">
+            Save Changes
+          </button>
+        </form>
+      ),
+    });
+  };
+
   render() {
-    const { GeneralInfo, Edu, Work, EduForms } = this.state;
+    const { GeneralInfo, Edu, Work, EduForms, WorkForms } = this.state;
     return (
       <div className="App">
         <div className="Header">
@@ -280,6 +398,13 @@ class App extends Component {
                 onChange={this.handleGIChange}
                 required
               ></input>
+              <button
+                type="button"
+                className="FormBtn"
+                onClick={this.handleGIEdit}
+              >
+                Edit
+              </button>
               <button type="submit" className="FormBtn">
                 Save Changes
               </button>
@@ -297,48 +422,15 @@ class App extends Component {
             </button>
           </div>
           <div className="WorkExp">
-            <form onSubmit={this.handleWorkSubmit}>
-              <h2>Work & Leadership Experience</h2>
-              <strong>#1</strong>
-              <input
-                type="text"
-                className="CompanyName"
-                name="Company"
-                placeholder="Company Name"
-                onChange={this.handleWorkChange}
-                required
-              ></input>
-              <input
-                type="text"
-                className="PositionTitle"
-                name="Position"
-                placeholder="Position/Title"
-                onChange={this.handleWorkChange}
-                required
-              ></input>
-              <input
-                type="text"
-                className="WorkDur"
-                name="WorkYears"
-                placeholder="Inclusive Years"
-                onChange={this.handleWorkChange}
-                required
-              ></input>
-              <textarea
-                type="text"
-                className="JobDesc"
-                name="WorkDesc"
-                placeholder="Job Description"
-                cols="50"
-                rows="3"
-                onChange={this.handleWorkChange}
-                required
-              ></textarea>
-              <button className="FormBtn">Add New</button>
-              <button className="FormBtn" type="submit">
-                Save Changes
-              </button>
-            </form>
+            <h2>Work & Leadership Experience</h2>
+            {WorkForms}
+            <button
+              className="FormBtn newWorkBtn"
+              onClick={this.handleNewWorkForm}
+              type="button"
+            >
+              Add New
+            </button>
           </div>
         </div>
         <div className="CV">
