@@ -446,6 +446,7 @@ class App extends Component {
           <h2>Work Experience</h2>
           <WorkExp WorkBG={Work} />
         </div>
+        <footer>Made by Keane Andre</footer>
       </div>
     );
   }

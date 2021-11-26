@@ -25,6 +25,11 @@ textarea {
   width: 90%;
 }
 
+footer {
+  padding: 1rem;
+  text-align: center;
+}
+
 .disabled {
   cursor: not-allowed;
 }
@@ -74,7 +79,7 @@ textarea {
   justify-content: left;
   align-items: center;
   height: 100%;
-  width: 100%;
+  width: 50%;
 }
 
 .Header {
