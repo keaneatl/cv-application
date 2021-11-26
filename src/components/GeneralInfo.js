@@ -2,10 +2,6 @@ import React, { Component } from "react";
 import "../styles/GenInfoStyles.css";
 
 class GenInfo extends Component {
-  constructor() {
-    super();
-  }
-
   render() {
     const { FullName, Email, PhoneNum } = this.props;
     return (

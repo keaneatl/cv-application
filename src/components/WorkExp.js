@@ -2,10 +2,6 @@ import React, { Component } from "react";
 import "../styles/WorkStyles.css";
 
 class WorkExp extends Component {
-  constructor() {
-    super();
-  }
-
   render() {
     const { WorkBG } = this.props;
     return (

@@ -69,7 +69,6 @@ class App extends Component {
 
   handleGIEdit = (e) => {
     const inputFields = Array.from(e.target.parentNode.childNodes);
-    console.log(inputFields);
     inputFields.forEach((field) => field.removeAttribute("disabled"));
   };
 
@@ -119,7 +118,7 @@ class App extends Component {
     });
   };
 
-  handleNewEduForm = (e) => {
+  handleNewEduForm = () => {
     const handleEdit = (e) => {
       const editBtn = e.target;
       const formElems = Array.from(editBtn.parentNode.parentNode.childNodes);
@@ -238,7 +237,7 @@ class App extends Component {
     });
   };
 
-  handleNewWorkForm = (e) => {
+  handleNewWorkForm = () => {
     const handleEdit = (e) => {
       const editBtn = e.target;
       const formElems = Array.from(editBtn.parentNode.parentNode.childNodes);
@@ -268,7 +267,6 @@ class App extends Component {
         e.setAttribute("disabled", true);
       });
       const formKeyVals = Object.values(e.target);
-      console.log(formKeyVals);
       if (this.state.Work.some((item) => item.id === formKeyVals[7].key)) {
         this.setState({
           Work: this.state.Work.map((item) => {
@@ -296,7 +294,6 @@ class App extends Component {
 
     const handleDelete = (e) => {
       const formKeyVals = Object.values(e.target.parentNode.parentNode);
-      console.log(formKeyVals);
       this.setState({
         Work: this.state.Work.filter((item) => item.id !== formKeyVals[7].key),
         WorkForms: this.state.WorkForms.filter(

@@ -2,9 +2,6 @@ import React, { Component } from "react";
 import "../styles/EducationStyles.css";
 
 class Education extends Component {
-  constructor() {
-    super();
-  }
   render() {
     const { EduBG } = this.props;
     return (
